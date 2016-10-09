@@ -1,9 +1,9 @@
 # `<twitter-timeline>` Polymer (ES6)
 
-[![Build status](https://travis-ci.org/LasaleFamine/twitter-timeline.svg?branch=master)](https://travis-ci.org/LasaleFamine/twitter-timeline)
+[![Build status](https://travis-ci.org/LasaleFamine/polymer-twitter-timeline.svg?branch=master)](https://travis-ci.org/LasaleFamine/polymer-twitter-timeline)
 [![Bower version](https://badge.fury.io/bo/polymer-twitter-timeline.svg)](https://badge.fury.io/bo/polymer-twitter-timeline)
 [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
-[![Dependency Status](https://gemnasium.com/badges/github.com/LasaleFamine/twitter-timeline.svg)](https://gemnasium.com/github.com/LasaleFamine/twitter-timeline)
+[![Dependency Status](https://gemnasium.com/badges/github.com/LasaleFamine/polymer-twitter-timeline.svg)](https://gemnasium.com/github.com/LasaleFamine/polymer-twitter-timeline)
 
 
 

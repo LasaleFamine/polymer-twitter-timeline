@@ -15,3 +15,5 @@ addons:
       - google-chrome
     packages:
       - google-chrome-stable
+notifications:
+  slack: freecomsrl:bugIngkCBwFOd2nOQlhRuUuc
