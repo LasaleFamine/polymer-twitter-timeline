@@ -77,6 +77,7 @@ Twitter data-id to feed the timeline:
 - Get the data from whatever source you want
 - Get the data-widget-id
 ____
+
 #### .removeTimeline()
 Remove current timeline.
 
