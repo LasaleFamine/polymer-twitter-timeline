@@ -75,8 +75,9 @@ Will load (or reload) the timeline with the widget id passed or with the `this.d
 Twitter data-id to feed the timeline:
 - Create a new widget: https://twitter.com/settings/widgets/new
 - Get the data from whatever source you want
-- Get the data-widget-id
-____
+- Get the data-widget-id  
+
+___
 
 #### .removeTimeline()
 Remove current timeline.
