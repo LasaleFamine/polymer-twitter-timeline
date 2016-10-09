@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <!-- MAIN IMPORTS -->
+    <script src="./../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="./../../web-component-tester/browser.js"></script>
+
+
+    <link rel="import" href="./../../polymer/polymer.html">
+
+    <!-- COMPONENT TO TEST -->
+    <link rel="import" href="./../twitter-timeline.html">
+</head>
+
+<body>
+
+    <test-fixture id="twitterTimeline">
+        <template>
+            <twitter-timeline data-widget-id="670001400336752641"></twitter-timeline>
+        </template>
+    </test-fixture>
+
+
+    <script>
+        suite('<twitter-timeline>', function() {
+            var twitterTimeline;
+
+            setup(function() {
+                twitterTimeline = fixture('twitterTimeline');
+            });
+
+            suite('Test Properties', function() {
+                test('Default Properties', function() {
+                    assert.isUndefined(twitterTimeline.Twtt, "Twtt undefined on-load");
+                    assert.equal(twitterTimeline.uniqueId, "twitterTimelinePolymerLibLoader", "Correct uniquerid");
+                    assert.equal(twitterTimeline.dataWidgetId, "670001400336752641","Correct dataWidgetId onload");
+                    assert.isObject
+                    (twitterTimeline.size, "size is object onload");
+                    assert.equal(twitterTimeline.size.width, "400")
+                    assert.equal(twitterTimeline.size.height, "400")
+                });
+
+                test('Initialization timeline', function(done) {
+                    twitterTimeline.addEventListener('timeline-loaded', function (evt) {
+                        assert.isObject(twitterTimeline.Twtt, "Correct initialization library");
+                        done();
+                    })
+                });
+            });
+
+            suite('Test Methods', function() {
+
+            });
+
+        });
+    </script>
+</body>
+
+</html>

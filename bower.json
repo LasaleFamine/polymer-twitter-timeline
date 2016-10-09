@@ -1,0 +1,28 @@
+{
+  "name": "polymer-twitter-timeline",
+  "main": "twitter-timeline.js",
+  "version": "0.0.1",
+  "authors": [
+    "LasaleFamine <info@godev.space>"
+  ],
+  "description": "Polymer (ES6) wrapper of Twitter Widget Library for Timelines",
+  "keywords": [
+    "twitter",
+    "timeline",
+    "polymer",
+    "es6"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/LasaleFamine/polymer-twitter-timeline#readme",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer-lib-loader": "^0.1.3",
+    "polymer": "^1.7.0"
+  }
+}

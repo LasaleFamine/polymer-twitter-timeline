@@ -1,0 +1,17 @@
+
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer-lib-loader/lib-loader.html">
+
+<dom-module id="twitter-timeline">
+  <template>
+    <style>
+    </style>
+
+    <lib-loader id="loaderTwtt" on-lib-loaded="_onTwttLoad"></lib-loader>
+
+    <div id="timeline">
+      <slot name="title"></slot>
+    </div>
+  </template>
+  <script src="twitter-timeline.js"></script>
+</dom-module>
