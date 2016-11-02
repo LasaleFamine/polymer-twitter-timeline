@@ -55,10 +55,10 @@ class twitterTimeline {
 
       _twttLoaded: {
         type: Promise,
-        value: function() {
+        value: function () {
           return new Promise(resolve => {
-            this._resolveTwttLoaded = resolve;
-          });
+            this._resolveTwttLoaded = resolve
+          })
         }
       }
     }
