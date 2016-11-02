@@ -57,8 +57,8 @@ class twitterTimeline {
         type: Promise,
         value: function() {
           return new Promise(resolve => {
-            this._resolveTwttLoaded = resolve;
-          });
+            this._resolveTwttLoaded = resolve
+          })
         }
       }
     }
@@ -69,7 +69,7 @@ class twitterTimeline {
     this._computeLibLink()
     this._computeUniqueId()
     if (this.$.loaderTwtt.isAttached) {
-      this.$.loaderTwtt.attached();
+      this.$.loaderTwtt.attached()
     }
   }
 
