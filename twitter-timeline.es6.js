@@ -57,8 +57,8 @@ class twitterTimeline {
         type: Promise,
         value: function() {
           return new Promise(resolve => {
-            this._resolveTwttLoaded = resolve
-          })
+            this._resolveTwttLoaded = resolve;
+          });
         }
       }
     }
