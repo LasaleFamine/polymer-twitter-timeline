@@ -55,7 +55,7 @@ class twitterTimeline {
     this._computeLibLink()
     this._computeUniqueId()
     if (this.$.loaderTwtt.isAttached) {
-      this.$.loaderTwtt.attached();
+      this.$.loaderTwtt.attached()
     }
   }
 
