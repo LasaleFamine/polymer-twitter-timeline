@@ -31,7 +31,8 @@ class twitterTimeline {
        *
        */
       dataWidgetId: {
-        type: String
+        type: String,
+        observer: '_dataWidgetIdChanged'
       },
       /**
        * Specifies `width` and `height` of the widget
@@ -45,6 +46,19 @@ class twitterTimeline {
             width: '400',
             height: '400'
           }
+        }
+      },
+
+      _resolveTwttLoaded: {
+        type: Function
+      },
+
+      _twttLoaded: {
+        type: Promise,
+        value: function() {
+          return new Promise(resolve => {
+            this._resolveTwttLoaded = resolve;
+          });
         }
       }
     }
@@ -116,7 +130,16 @@ class twitterTimeline {
 
   _onTwttLoad () {
     this.Twtt = window.twttr
+    this._resolveTwttLoaded()
     this.loadTimeline()
+  }
+
+  _dataWidgetIdChanged () {
+    if (this.dataWidgetId) {
+      this._twttLoaded.then(() => {
+        this.loadTimeline(this.dataWidgetId)
+      })
+    }
   }
 
 }
