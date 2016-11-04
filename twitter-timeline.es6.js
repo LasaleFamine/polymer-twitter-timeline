@@ -60,6 +60,13 @@ class twitterTimeline {
             this._resolveTwttLoaded = resolve
           })
         }
+      },
+
+      _timelineLoaded: {
+        type: Promise,
+        value: function () {
+          return Promise.resolve()
+        }
       }
     }
   }
@@ -78,30 +85,34 @@ class twitterTimeline {
    *  {string} widgetId(optional) Id (or new id) of the twitter timeline
    **/
   loadTimeline (widgetId) {
-     // Destroy previous timeline
-    this.removeTimeline()
-     // Check if the widget id is present
-    const widget = widgetId || this._checkForWidgetId()
+      this._timelineLoaded = this._timelineLoaded.then(() => {
+        // Destroy previous timeline
+        this.removeTimeline()
+      })
+      // Check if the widget id is present
+      const widget = widgetId || this._checkForWidgetId()
 
-    if (widget) {
-      this.Twtt.widgets.createTimeline(
-         widget,
-         this.$.timeline, {
-           width: this.size.width,
-           height: this.size.height,
-           related: 'twitterdev,twitterapi'
-         }).then((el) => {
-           this.dispatchEvent(new CustomEvent('timeline-loaded', {
-             detail: {
-               loaded: true
-             }
-           }))
-         })
-      return true
-    }
+      if (widget) {
+          this._timelineLoaded = this._timelineLoaded.then(() => {
+            return this.Twtt.widgets.createTimeline(
+              widget,
+              this.$.timeline, {
+                width: this.size.width,
+                height: this.size.height,
+                related: 'twitterdev,twitterapi'
+            }).then((el) => {
+              this.dispatchEvent(new CustomEvent('timeline-loaded', {
+                detail: {
+                  loaded: true
+                }
+              }))
+            })
+          })
+        return true
+      }
 
-    console.warn("WARNING: 'data-widget-id' is not defined ")
-    return false
+      console.warn("WARNING: 'data-widget-id' is not defined ")
+      return false
   }
 
    /**
@@ -131,7 +142,6 @@ class twitterTimeline {
   _onTwttLoad () {
     this.Twtt = window.twttr
     this._resolveTwttLoaded()
-    this.loadTimeline()
   }
 
   _dataWidgetIdChanged () {

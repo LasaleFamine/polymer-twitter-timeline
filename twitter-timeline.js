@@ -69,6 +69,13 @@ var twitterTimeline = function () {
               _this._resolveTwttLoaded = resolve;
             });
           }
+        },
+
+        _timelineLoaded: {
+          type: Promise,
+          value: function value() {
+            return Promise.resolve();
+          }
         }
       };
     }
@@ -95,22 +102,26 @@ var twitterTimeline = function () {
     value: function loadTimeline(widgetId) {
       var _this2 = this;
 
-      // Destroy previous timeline
-      this.removeTimeline();
+      this._timelineLoaded = this._timelineLoaded.then(function () {
+        // Destroy previous timeline
+        _this2.removeTimeline();
+      });
       // Check if the widget id is present
       var widget = widgetId || this._checkForWidgetId();
 
       if (widget) {
-        this.Twtt.widgets.createTimeline(widget, this.$.timeline, {
-          width: this.size.width,
-          height: this.size.height,
-          related: 'twitterdev,twitterapi'
-        }).then(function (el) {
-          _this2.dispatchEvent(new CustomEvent('timeline-loaded', {
-            detail: {
-              loaded: true
-            }
-          }));
+        this._timelineLoaded = this._timelineLoaded.then(function () {
+          return _this2.Twtt.widgets.createTimeline(widget, _this2.$.timeline, {
+            width: _this2.size.width,
+            height: _this2.size.height,
+            related: 'twitterdev,twitterapi'
+          }).then(function (el) {
+            _this2.dispatchEvent(new CustomEvent('timeline-loaded', {
+              detail: {
+                loaded: true
+              }
+            }));
+          });
         });
         return true;
       }
@@ -156,7 +167,6 @@ var twitterTimeline = function () {
     value: function _onTwttLoad() {
       this.Twtt = window.twttr;
       this._resolveTwttLoaded();
-      this.loadTimeline();
     }
   }, {
     key: '_dataWidgetIdChanged',
