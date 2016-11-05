@@ -1,13 +1,13 @@
 'use strict'
 
-var _createClass = function () { function defineProperties (target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor) } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor } }()
+var _createClass = (function () { function defineProperties (target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor) } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor } }())
 
 function _classCallCheck (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function') } }
 
 var Polymer = window.Polymer
 var CustomEvent = window.CustomEvent
 
-var twitterTimeline = function () {
+var twitterTimeline = (function () {
   function twitterTimeline () {
     _classCallCheck(this, twitterTimeline)
   }
@@ -37,7 +37,8 @@ var twitterTimeline = function () {
          *
          */
         dataWidgetId: {
-          type: String
+          type: String,
+          observer: '_dataWidgetIdChanged'
         },
         /**
          * Specifies `width` and `height` of the widget
@@ -52,6 +53,28 @@ var twitterTimeline = function () {
               height: '400'
             }
           }
+        },
+
+        _resolveTwttLoaded: {
+          type: Function
+        },
+
+        _twttLoaded: {
+          type: Promise,
+          value: function value () {
+            var _this = this
+
+            return new Promise(function (resolve) {
+              _this._resolveTwttLoaded = resolve
+            })
+          }
+        },
+
+        _timelineLoaded: {
+          type: Promise,
+          value: function value () {
+            return Promise.resolve()
+          }
         }
       }
     }
@@ -63,6 +86,9 @@ var twitterTimeline = function () {
     value: function ready () {
       this._computeLibLink()
       this._computeUniqueId()
+      if (this.$.loaderTwtt.isAttached) {
+        this.$.loaderTwtt.attached()
+      }
     }
 
     /**
@@ -73,24 +99,28 @@ var twitterTimeline = function () {
   }, {
     key: 'loadTimeline',
     value: function loadTimeline (widgetId) {
-      var _this = this
+      var _this2 = this
 
-      // Destroy previous timeline
-      this.removeTimeline()
+      this._timelineLoaded = this._timelineLoaded.then(function () {
+        // Destroy previous timeline
+        _this2.removeTimeline()
+      })
       // Check if the widget id is present
       var widget = widgetId || this._checkForWidgetId()
 
       if (widget) {
-        this.Twtt.widgets.createTimeline(widget, this.$.timeline, {
-          width: this.size.width,
-          height: this.size.height,
-          related: 'twitterdev,twitterapi'
-        }).then(function (el) {
-          _this.dispatchEvent(new CustomEvent('timeline-loaded', {
-            detail: {
-              loaded: true
-            }
-          }))
+        this._timelineLoaded = this._timelineLoaded.then(function () {
+          return _this2.Twtt.widgets.createTimeline(widget, _this2.$.timeline, {
+            width: _this2.size.width,
+            height: _this2.size.height,
+            related: 'twitterdev,twitterapi'
+          }).then(function (el) {
+            _this2.dispatchEvent(new CustomEvent('timeline-loaded', {
+              detail: {
+                loaded: true
+              }
+            }))
+          })
         })
         return true
       }
@@ -135,7 +165,18 @@ var twitterTimeline = function () {
     key: '_onTwttLoad',
     value: function _onTwttLoad () {
       this.Twtt = window.twttr
-      this.loadTimeline()
+      this._resolveTwttLoaded()
+    }
+  }, {
+    key: '_dataWidgetIdChanged',
+    value: function _dataWidgetIdChanged () {
+      var _this3 = this
+
+      if (this.dataWidgetId) {
+        this._twttLoaded.then(function () {
+          _this3.loadTimeline(_this3.dataWidgetId)
+        })
+      }
     }
   }, {
     key: 'behaviors',
@@ -147,7 +188,7 @@ var twitterTimeline = function () {
   }])
 
   return twitterTimeline
-}()
+}())
 
 // Register the element using Polymer's constructor.
 

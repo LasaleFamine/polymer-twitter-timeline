@@ -31,7 +31,8 @@ class twitterTimeline {
        *
        */
       dataWidgetId: {
-        type: String
+        type: String,
+        observer: '_dataWidgetIdChanged'
       },
       /**
        * Specifies `width` and `height` of the widget
@@ -46,6 +47,26 @@ class twitterTimeline {
             height: '400'
           }
         }
+      },
+
+      _resolveTwttLoaded: {
+        type: Function
+      },
+
+      _twttLoaded: {
+        type: Promise,
+        value: function () {
+          return new Promise(resolve => {
+            this._resolveTwttLoaded = resolve
+          })
+        }
+      },
+
+      _timelineLoaded: {
+        type: Promise,
+        value: function () {
+          return Promise.resolve()
+        }
       }
     }
   }
@@ -54,6 +75,9 @@ class twitterTimeline {
   ready () {
     this._computeLibLink()
     this._computeUniqueId()
+    if (this.$.loaderTwtt.isAttached) {
+      this.$.loaderTwtt.attached()
+    }
   }
 
   /**
@@ -61,25 +85,29 @@ class twitterTimeline {
    *  {string} widgetId(optional) Id (or new id) of the twitter timeline
    **/
   loadTimeline (widgetId) {
-     // Destroy previous timeline
-    this.removeTimeline()
-     // Check if the widget id is present
+    this._timelineLoaded = this._timelineLoaded.then(() => {
+        // Destroy previous timeline
+      this.removeTimeline()
+    })
+      // Check if the widget id is present
     const widget = widgetId || this._checkForWidgetId()
 
     if (widget) {
-      this.Twtt.widgets.createTimeline(
-         widget,
-         this.$.timeline, {
-           width: this.size.width,
-           height: this.size.height,
-           related: 'twitterdev,twitterapi'
-         }).then((el) => {
-           this.dispatchEvent(new CustomEvent('timeline-loaded', {
-             detail: {
-               loaded: true
-             }
-           }))
-         })
+      this._timelineLoaded = this._timelineLoaded.then(() => {
+        return this.Twtt.widgets.createTimeline(
+              widget,
+              this.$.timeline, {
+                width: this.size.width,
+                height: this.size.height,
+                related: 'twitterdev,twitterapi'
+              }).then((el) => {
+                this.dispatchEvent(new CustomEvent('timeline-loaded', {
+                  detail: {
+                    loaded: true
+                  }
+                }))
+              })
+      })
       return true
     }
 
@@ -113,7 +141,15 @@ class twitterTimeline {
 
   _onTwttLoad () {
     this.Twtt = window.twttr
-    this.loadTimeline()
+    this._resolveTwttLoaded()
+  }
+
+  _dataWidgetIdChanged () {
+    if (this.dataWidgetId) {
+      this._twttLoaded.then(() => {
+        this.loadTimeline(this.dataWidgetId)
+      })
+    }
   }
 
 }
