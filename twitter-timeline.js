@@ -1,23 +1,24 @@
-'use strict'
+'use strict';
 
-var _createClass = (function () { function defineProperties (target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor) } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor } }())
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _classCallCheck (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function') } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Polymer = window.Polymer
-var CustomEvent = window.CustomEvent
+var Polymer = window.Polymer;
+var CustomEvent = window.CustomEvent;
 
-var twitterTimeline = (function () {
-  function twitterTimeline () {
-    _classCallCheck(this, twitterTimeline)
+var twitterTimeline = function () {
+  function twitterTimeline() {
+    _classCallCheck(this, twitterTimeline);
   }
 
   _createClass(twitterTimeline, [{
     key: 'beforeRegister',
 
+
     // Element setup goes in beforeRegister instead of createdCallback.
-    value: function beforeRegister () {
-      this.is = 'twitter-timeline'
+    value: function beforeRegister() {
+      this.is = 'twitter-timeline';
 
       // Define the properties object in beforeRegister.
       this.properties = {
@@ -47,11 +48,11 @@ var twitterTimeline = (function () {
          */
         size: {
           type: Object,
-          value: function value () {
+          value: function value() {
             return {
               width: '400',
               height: '400'
-            }
+            };
           }
         },
 
@@ -61,33 +62,33 @@ var twitterTimeline = (function () {
 
         _twttLoaded: {
           type: Promise,
-          value: function value () {
-            var _this = this
+          value: function value() {
+            var _this = this;
 
             return new Promise(function (resolve) {
-              _this._resolveTwttLoaded = resolve
-            })
+              _this._resolveTwttLoaded = resolve;
+            });
           }
         },
 
         _timelineLoaded: {
           type: Promise,
-          value: function value () {
-            return Promise.resolve()
+          value: function value() {
+            return Promise.resolve();
           }
         }
-      }
+      };
     }
 
     // onReady fill <lib-loader> component to load Ace.js from CDN
 
   }, {
     key: 'ready',
-    value: function ready () {
-      this._computeLibLink()
-      this._computeUniqueId()
+    value: function ready() {
+      this._computeLibLink();
+      this._computeUniqueId();
       if (this.$.loaderTwtt.isAttached) {
-        this.$.loaderTwtt.attached()
+        this.$.loaderTwtt.attached();
       }
     }
 
@@ -98,15 +99,15 @@ var twitterTimeline = (function () {
 
   }, {
     key: 'loadTimeline',
-    value: function loadTimeline (widgetId) {
-      var _this2 = this
+    value: function loadTimeline(widgetId) {
+      var _this2 = this;
 
       this._timelineLoaded = this._timelineLoaded.then(function () {
         // Destroy previous timeline
-        _this2.removeTimeline()
-      })
+        _this2.removeTimeline();
+      });
       // Check if the widget id is present
-      var widget = widgetId || this._checkForWidgetId()
+      var widget = widgetId || this._checkForWidgetId();
 
       if (widget) {
         this._timelineLoaded = this._timelineLoaded.then(function () {
@@ -119,14 +120,14 @@ var twitterTimeline = (function () {
               detail: {
                 loaded: true
               }
-            }))
-          })
-        })
-        return true
+            }));
+          });
+        });
+        return true;
       }
 
-      console.warn("WARNING: 'data-widget-id' is not defined ")
-      return false
+      console.warn("WARNING: 'data-widget-id' is not defined ");
+      return false;
     }
 
     /**
@@ -135,11 +136,11 @@ var twitterTimeline = (function () {
 
   }, {
     key: 'removeTimeline',
-    value: function removeTimeline () {
+    value: function removeTimeline() {
       if (this.$.timeline.querySelector('iframe')) {
-        return this.$.timeline.removeChild(this.$.timeline.querySelector('iframe'))
+        return this.$.timeline.removeChild(this.$.timeline.querySelector('iframe'));
       }
-      return false
+      return false;
     }
 
     /** ===============
@@ -148,48 +149,49 @@ var twitterTimeline = (function () {
 
   }, {
     key: '_computeLibLink',
-    value: function _computeLibLink () {
-      this.$.loaderTwtt.set('lib', 'https://platform.twitter.com/widgets.js')
+    value: function _computeLibLink() {
+      this.$.loaderTwtt.set('lib', 'https://platform.twitter.com/widgets.js');
     }
   }, {
     key: '_computeUniqueId',
-    value: function _computeUniqueId () {
-      this.$.loaderTwtt.set('libUniqueId', this.uniqueId)
+    value: function _computeUniqueId() {
+      this.$.loaderTwtt.set('libUniqueId', this.uniqueId);
     }
   }, {
     key: '_checkForWidgetId',
-    value: function _checkForWidgetId () {
-      return this.dataWidgetId || false
+    value: function _checkForWidgetId() {
+      return this.dataWidgetId || false;
     }
   }, {
     key: '_onTwttLoad',
-    value: function _onTwttLoad () {
-      this.Twtt = window.twttr
-      this._resolveTwttLoaded()
+    value: function _onTwttLoad() {
+      this.Twtt = window.twttr;
+      this._resolveTwttLoaded();
     }
   }, {
     key: '_dataWidgetIdChanged',
-    value: function _dataWidgetIdChanged () {
-      var _this3 = this
+    value: function _dataWidgetIdChanged() {
+      var _this3 = this;
 
       if (this.dataWidgetId) {
         this._twttLoaded.then(function () {
-          _this3.loadTimeline(_this3.dataWidgetId)
-        })
+          _this3.loadTimeline(_this3.dataWidgetId);
+        });
       }
     }
   }, {
     key: 'behaviors',
 
     // Define behaviors with a getter.
-    get: function get () {
-      return []
+    get: function get() {
+      return [];
     }
-  }])
+  }]);
 
-  return twitterTimeline
-}())
+  return twitterTimeline;
+}();
 
 // Register the element using Polymer's constructor.
 
-Polymer(twitterTimeline)
+
+Polymer(twitterTimeline);

@@ -1,7 +1,7 @@
 {
   "name": "polymer-twitter-timeline",
   "main": "twitter-timeline.js",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "authors": [
     "LasaleFamine <info@godev.space>"
   ],
