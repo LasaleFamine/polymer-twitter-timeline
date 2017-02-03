@@ -55,6 +55,15 @@ var twitterTimeline = function () {
             };
           }
         },
+        /**
+         * Value for `data-chrome` (https://dev.twitter.com/web/embedded-timelines#customize-widget-components)
+         *
+         * @type 'noheader,nofooter,noborders,noscrollbar,transparent'
+        */
+        chrome: {
+          type: String,
+          value: ''
+        },
 
         _resolveTwttLoaded: {
           type: Function
@@ -114,6 +123,7 @@ var twitterTimeline = function () {
           return _this2.Twtt.widgets.createTimeline(widget, _this2.$.timeline, {
             width: _this2.size.width,
             height: _this2.size.height,
+            chrome: _this2.chrome,
             related: 'twitterdev,twitterapi'
           }).then(function (el) {
             _this2.dispatchEvent(new CustomEvent('timeline-loaded', {

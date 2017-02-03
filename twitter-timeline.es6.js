@@ -48,6 +48,15 @@ class twitterTimeline {
           }
         }
       },
+      /**
+       * Value for `data-chrome` (https://dev.twitter.com/web/embedded-timelines#customize-widget-components)
+       *
+       * @type 'noheader,nofooter,noborders,noscrollbar,transparent'
+      */
+      chrome: {
+        type: String,
+        value: ''
+      },
 
       _resolveTwttLoaded: {
         type: Function
@@ -99,6 +108,7 @@ class twitterTimeline {
               this.$.timeline, {
                 width: this.size.width,
                 height: this.size.height,
+                chrome: this.chrome,
                 related: 'twitterdev,twitterapi'
               }).then((el) => {
                 this.dispatchEvent(new CustomEvent('timeline-loaded', {
