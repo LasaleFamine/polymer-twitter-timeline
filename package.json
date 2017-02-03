@@ -1,6 +1,6 @@
 {
   "name": "polymer-twitter-timeline",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Polymer (ES6) wrapper of Twitter Widget Library for Timelines",
   "main": "twitter-timeline.js",
   "repository": {
