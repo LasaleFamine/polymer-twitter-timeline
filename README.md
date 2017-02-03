@@ -60,6 +60,15 @@ Forget to import any library, just import the component and **polifylls** if nee
         height: "400"
       }
     }
+  },
+  /**
+   * Value for `data-chrome` (https://dev.twitter.com/web/embedded-timelines#customize-widget-components)
+   *
+   * @type 'noheader,nofooter,noborders,noscrollbar,transparent'
+  */
+  chrome: {
+    type: String,
+    value: ''
   }
 }
 
