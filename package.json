@@ -1,29 +1,39 @@
 {
   "name": "polymer-twitter-timeline",
-  "version": "0.2.0",
-  "description": "Polymer (ES6) wrapper of Twitter Widget Library for Timelines",
-  "main": "twitter-timeline.js",
+  "version": "1.0.0",
+  "description": "Polymer (3) wrapper of Twitter Widget Library for Timelines",
+  "main": "src/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/LasaleFamine/polymer-twitter-timeline.git"
   },
   "scripts": {
-    "start": "gulp watch",
-    "test": "standard twitter-timeline.es6.js && wct",
-    "build": "gulp",
-    "fix": "standard --fix"
+    "start": "yarn build && http-server .",
+    "build": "webpack --config test/webpack.config.js",
+    "test": "xo && yarn build && wct",
+    "postinstall": "ln -s node_modules bower_components",
+    "fix": "xo --fix"
+  },
+  "files": [
+    "src"
+  ],
+  "xo": {
+    "space": true,
+    "envs": [
+      "browser"
+    ],
+    "ignores": [
+      "test/**"
+    ]
   },
   "author": "Alessio Occhipinti @lasalefamine",
   "license": "MIT",
   "devDependencies": {
-    "babel-preset-es2015": "^6.14.0",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
-    "gulp-connect": "^5.0.0",
-    "gulp-plumber": "^1.1.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-watch": "^4.3.9",
-    "standard": "^8.3.0",
-    "web-component-tester": "^4.3.4"
+    "webpack": "3.5.5",
+    "xo": "0.18.2"
+  },
+  "dependencies": {
+    "@polymer/polymer": "LasaleFamine/polymer#3.0-preview",
+    "polymer-lib-loader": "1.0.2"
   }
 }
