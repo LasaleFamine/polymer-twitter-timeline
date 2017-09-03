@@ -1,21 +1,11 @@
-'use strict'
+import {Element} from '@polymer/polymer/polymer-element';
+/* eslint-disable no-unused-vars */
+import libLoader from 'polymer-lib-loader';
 
-const Polymer = window.Polymer
-const CustomEvent = window.CustomEvent
-
-class twitterTimeline {
-  // Define behaviors with a getter.
-  get behaviors () {
-    return []
-  }
-
-  // Element setup goes in beforeRegister instead of createdCallback.
-  beforeRegister () {
-    this.is = 'twitter-timeline'
-
-    // Define the properties object in beforeRegister.
-    this.properties = {
-      /** Twtt istance **/
+export default class TwitterTimeline extends Element {
+  static get properties() {
+    return {
+      /** Twtt istance * */
       Twtt: {
         type: Function
       },
@@ -45,7 +35,7 @@ class twitterTimeline {
           return {
             width: '400',
             height: '400'
-          }
+          };
         }
       },
       /**
@@ -64,42 +54,51 @@ class twitterTimeline {
 
       _twttLoaded: {
         type: Promise,
-        value: function () {
+        value() {
           return new Promise(resolve => {
-            this._resolveTwttLoaded = resolve
-          })
+            this._resolveTwttLoaded = resolve;
+          });
         }
       },
 
       _timelineLoaded: {
         type: Promise,
-        value: function () {
-          return Promise.resolve()
+        value() {
+          return Promise.resolve();
         }
       }
-    }
+    };
   }
 
-  // onReady fill <lib-loader> component to load Ace.js from CDN
-  ready () {
-    this._computeLibLink()
-    this._computeUniqueId()
+  static get template() {
+    return `
+    <lib-loader id="loaderTwtt" on-lib-loaded="_onTwttLoad"></lib-loader>
+    <div id="timeline">
+      <slot name="title"></slot>
+    </div>
+    `;
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    this._computeLibLink();
+    this._computeUniqueId();
     if (this.$.loaderTwtt.isAttached) {
-      this.$.loaderTwtt.attached()
+      this.$.loaderTwtt.attached();
     }
   }
 
   /**
    *  {function} loadTimeline load (or reload)  the timeline
    *  {string} widgetId(optional) Id (or new id) of the twitter timeline
-   **/
-  loadTimeline (widgetId) {
+   * */
+  loadTimeline(widgetId) {
     this._timelineLoaded = this._timelineLoaded.then(() => {
         // Destroy previous timeline
-      this.removeTimeline()
-    })
+      this.removeTimeline();
+    });
       // Check if the widget id is present
-    const widget = widgetId || this._checkForWidgetId()
+    const widget = widgetId || this._checkForWidgetId();
 
     if (widget) {
       this._timelineLoaded = this._timelineLoaded.then(() => {
@@ -110,59 +109,57 @@ class twitterTimeline {
                 height: this.size.height,
                 chrome: this.chrome,
                 related: 'twitterdev,twitterapi'
-              }).then((el) => {
+              }).then(() => {
                 this.dispatchEvent(new CustomEvent('timeline-loaded', {
                   detail: {
                     loaded: true
                   }
-                }))
-              })
-      })
-      return true
+                }));
+              });
+      });
+      return true;
     }
 
-    console.warn("WARNING: 'data-widget-id' is not defined ")
-    return false
+    console.warn('WARNING: \'data-widget-id\' is not defined ');
+    return false;
   }
 
    /**
     *  {function} removeTimeline remove the current timeline
-    **/
-  removeTimeline () {
+    * */
+  removeTimeline() {
     if (this.$.timeline.querySelector('iframe')) {
-      return this.$.timeline.removeChild(this.$.timeline.querySelector('iframe'))
+      return this.$.timeline.removeChild(this.$.timeline.querySelector('iframe'));
     }
-    return false
+    return false;
   }
 
   /** ===============
    * Private methods
-   **/
-  _computeLibLink () {
-    this.$.loaderTwtt.set('lib', `https://platform.twitter.com/widgets.js`)
+   * */
+  _computeLibLink() {
+    this.shadowRoot.querySelector('#loaderTwtt').set('lib', `https://platform.twitter.com/widgets.js`);
   }
-  _computeUniqueId () {
-    this.$.loaderTwtt.set('libUniqueId', this.uniqueId)
-  }
-
-  _checkForWidgetId () {
-    return this.dataWidgetId || false
+  _computeUniqueId() {
+    this.shadowRoot.querySelector('#loaderTwtt').set('libUniqueId', this.uniqueId);
   }
 
-  _onTwttLoad () {
-    this.Twtt = window.twttr
-    this._resolveTwttLoaded()
+  _checkForWidgetId() {
+    return this.dataWidgetId || false;
   }
 
-  _dataWidgetIdChanged () {
+  _onTwttLoad() {
+    this.Twtt = window.twttr;
+    this._resolveTwttLoaded();
+  }
+
+  _dataWidgetIdChanged() {
     if (this.dataWidgetId) {
       this._twttLoaded.then(() => {
-        this.loadTimeline(this.dataWidgetId)
-      })
+        this.loadTimeline(this.dataWidgetId);
+      });
     }
   }
-
 }
 
-// Register the element using Polymer's constructor.
-Polymer(twitterTimeline)
+window.customElements.define('twitter-timeline', TwitterTimeline);

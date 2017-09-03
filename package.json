@@ -30,6 +30,7 @@
   "author": "Alessio Occhipinti @lasalefamine",
   "license": "MIT",
   "devDependencies": {
+    "web-component-tester": "6.1.5",
     "webpack": "3.5.5",
     "xo": "0.18.2"
   },

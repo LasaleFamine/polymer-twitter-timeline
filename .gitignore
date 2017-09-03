@@ -10,3 +10,5 @@ npm-debug.log*
 node_modules
 # Just for wct
 bower_components
+
+test/element-bundle.js.map
