@@ -10,8 +10,9 @@
   "scripts": {
     "start": "yarn build && http-server .",
     "build": "webpack --config test/webpack.config.js",
+    "pretest": "yarn posttest && ln -s node_modules bower_components",
     "test": "xo && yarn build && wct",
-    "postinstall": "ln -s node_modules bower_components",
+    "posttest": "rm -rf bower_components",
     "fix": "xo --fix"
   },
   "files": [
