@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+  <head>
+    <title>twitter-timeline demo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+
+    <style>
+      .container {
+        display: flex;
+        flex-direction: row;
+      }
+      .item {
+        flex: 2; /* default 0 */
+      }
+    </style>
+
+    <script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+
+    <script src="/test/element-bundle.js"></script>
+  </head>
+  <body>
+
+    <div class="wrap">
+      <h3>Basic twitter-timeline demo</h3>
+      <div class="container">
+          <div class="item">
+            <twitter-timeline data-widget-id="670001400336752641" id="one"></twitter-timeline>
+          </div>
+          <div class="item">
+            <twitter-timeline data-widget-id="670001400336752641" id="2">
+              <h1 slot="title">With title</h1>
+            </twitter-timeline>
+          </div><div class="item">
+            <twitter-timeline chrome="noheader,noborders" data-widget-id="670001400336752641" id="2">
+              <h1 slot="title">With modified data-chrome</h1>
+            </twitter-timeline>
+          </div>
+      </div>
+    </div>
+  </body>
+</html>
