@@ -10,6 +10,8 @@
 
 Forget to import any library, just import the component and **polifylls** if needed ([webcomponentsjs](https://github.com/webcomponents/webcomponentsjs)) and you are ready to go.
 
+#### NOTE:
+I'm using a modified version of `@polymer/polymer` which I forked, removing the `flat` (useless and problematic) property for `yarn`.
 ## Install
 
     $ yarn add polymer-twitter-timeline
