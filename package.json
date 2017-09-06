@@ -36,6 +36,6 @@
   },
   "dependencies": {
     "@polymer/polymer": "LasaleFamine/polymer#3.0-preview",
-    "polymer-lib-loader": "1.0.2"
+    "polymer-lib-loader": "1.0.3"
   }
 }

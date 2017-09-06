@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@polymer/polymer@LasaleFamine/polymer#3.0-preview":
+"@polymer/polymer@LasaleFamine/polymer#3.0-preview", "@polymer/polymer@github:LasaleFamine/polymer#3.0-preview":
   version "3.0.0-pre.1"
   resolved "https://codeload.github.com/LasaleFamine/polymer/tar.gz/773ac29294ec8cdd7f310e8ddc7eaf5306bf88ab"
   dependencies:
@@ -4330,9 +4330,9 @@ polymer-bundler@^3.0.1:
     polymer-analyzer "^2.0.0"
     source-map "^0.5.6"
 
-polymer-lib-loader@1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/polymer-lib-loader/-/polymer-lib-loader-1.0.2.tgz#7ce22413db2a97f22c0042eb1a046b04a7f7f930"
+polymer-lib-loader@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/polymer-lib-loader/-/polymer-lib-loader-1.0.3.tgz#5911c345cf261d2c4e6f498b03fb19b32fea3e38"
   dependencies:
     "@polymer/polymer" LasaleFamine/polymer#3.0-preview
 
