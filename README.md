@@ -1,29 +1,41 @@
-# `<twitter-timeline>` Polymer (ES6)
+# `<twitter-timeline>` Polymer Element
 
 [![Build status](https://travis-ci.org/LasaleFamine/polymer-twitter-timeline.svg?branch=master)](https://travis-ci.org/LasaleFamine/polymer-twitter-timeline)
-[![Bower version](https://badge.fury.io/bo/polymer-twitter-timeline.svg)](https://badge.fury.io/bo/polymer-twitter-timeline)
-[![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
-[![Dependency Status](https://gemnasium.com/badges/github.com/LasaleFamine/polymer-twitter-timeline.svg)](https://gemnasium.com/github.com/LasaleFamine/polymer-twitter-timeline)
+[![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg?style=flat-square)](https://github.com/sindresorhus/xo)
 
 
-
-> Wrapper of [Twitter Widget.js](https://dev.twitter.com/web/javascript) as a customizable [Polymer 1.0](https://www.polymer-project.org/1.0/) WebComponent in ES6 syntax.
+> Wrapper of [Twitter Widget.js](https://dev.twitter.com/web/javascript) as a customizable [Polymer 3.0](https://www.polymer-project.org/) WebComponent.
 
 ## Why
 
-``` html
-<link rel="import" href="[your_bower_folder]/polymer-twitter-timeline/twitter-timeline.html">
-
-<twitter-timeline data-widget-id="[yourId]"></twitter-timeline>
-
-```
-
-Forget to import any library, just import the component and **polifylls** if needed ([webcomponentsjs](https://github.com/webcomponents/webcomponentsjs) just for Polymer) and you are ready to go.
+Forget to import any library, just import the component and **polifylls** if needed ([webcomponentsjs](https://github.com/webcomponents/webcomponentsjs)) and you are ready to go.
 
 ## Install
 
-    $ bower install polymer-twitter-timeline
+    $ yarn add polymer-twitter-timeline
 
+## Usage
+
+You may want to load it using Webpack.
+
+### awesome-component.js
+``` js
+import 'polymer-twitter-timeline';
+
+// Your awesome component logic...
+
+...
+
+static get template() {
+  return `
+  <twitter-timeline data-widget-id="yourAwesomeWidgetId" id="firstTimeline"></twitter-timeline>
+  `
+}
+
+...
+```
+
+The [`demo`](https://github.com/LasaleFamine/polymer-twitter-timeline/blob/master/demo/) uses a bundled element. You can check the [`webpack.config.js`](https://github.com/LasaleFamine/polymer-twitter-timeline/blob/master/test/webpack.config,js) for more details.
 
 ## Default Properties
 ``` js
@@ -109,24 +121,22 @@ The `Twtt` instance is available as `this.Twtt`
 
 ## Develop
 
-Clone the repository ***inside a folder*** (ex: `sandbox-twitter-timeline/twitter-timeline`) and inside the `twitter-timeline` folder:
+    $ yarn
 
-    $ npm install && bower install
+Compile and start a web server (http://localhost:8080/demo)
 
-Developing mode: **watch** on base files and **Babel** that transpiles (http://localhost:8080/twitter-timeline/demo)
+    $ yarn start
 
-    $ npm start
+Build: only the **Webpack** action simply run
 
-Build: only the **Babel** action simply run
-
-    $ npm run build
+    $ yarn build
 
 
 ## Test
 
-[Standard](http://standardjs.com/) for coding style and [WCT](https://github.com/polymer/web-component-tester) for unit test:
+[XO](https://github.com/sindresorhus/xo) for coding style and [WCT](https://github.com/polymer/web-component-tester) for unit test:
 
-    $ npm test
+    $ yarn test
 
 ## License
 
